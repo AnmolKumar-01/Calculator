@@ -1,7 +1,9 @@
 const DisplayBar = document.querySelector('input');
 const buttons = document.querySelectorAll('button')
 const validInputs = "00123456789/*+-."
+const operators = "*/+-.="
 let result = '';
+let text = ''
 
 
 //1. Add the values in search bar by clicking
@@ -9,17 +11,14 @@ buttons.forEach(button => {
     button.addEventListener('click',(e)=>{
         
         const num = e.target.innerHTML;
-        const text = DisplayBar.value;
-        console.log(text);
         
         // can't click equals to on empty input box
-        if(text == '' && num == '=' ){
+        if( ( text == '' || operators.includes(text[text.length-1]))  && operators.includes(num) ){
             //do nothing
         }
         // if it is a validInput -> add to displaybar
         else if(validInputs.includes(num)){
             result += num;
-            console.log(num);
         }
         // if it is AC -> clear the display Bar
         else if(num == 'AC'){
@@ -32,8 +31,10 @@ buttons.forEach(button => {
         else if(num == '='){
             result = (eval(result));
         }
-        DisplayBar.value = (result);    
+        DisplayBar.value = (result); 
+        text = DisplayBar.value;
 
  
     })
 });
+
